@@ -78,13 +78,7 @@ html, body, [class*="css"], .stApp {{
     box-shadow: 0 5px 18px rgba(217,104,104,0.35) !important;
 }}
 
-/* Lampu buttons */
-.btn-merah .stButton > button  {{ background: #D96868 !important; color: #FBF6F6 !important; box-shadow: 0 5px 18px rgba(217,104,104,0.38) !important; }}
-.btn-kuning .stButton > button {{ background: #C8954A !important; color: #2C2010 !important; box-shadow: 0 5px 18px rgba(200,149,74,0.38) !important; }}
-.btn-hijau .stButton > button  {{ background: #6A7E3F !important; color: #F0F4E8 !important; box-shadow: 0 5px 18px rgba(106,126,63,0.38) !important; }}
-.btn-merah .stButton > button:hover  {{ box-shadow: 0 8px 26px rgba(217,104,104,0.55) !important; }}
-.btn-kuning .stButton > button:hover {{ box-shadow: 0 8px 26px rgba(200,149,74,0.55) !important; }}
-.btn-hijau .stButton > button:hover  {{ box-shadow: 0 8px 26px rgba(106,126,63,0.55) !important; }}
+/* Lampu button colors injected inline per-button via span+div sibling selector */
 
 /* ── UI Elements ── */
 .badge {{
@@ -250,12 +244,27 @@ elif st.session_state.phase == "countdown":
         st.markdown(circle_timer(sisa, TIMER), unsafe_allow_html=True)
         st.markdown(f"<div style='text-align:center;color:{MUTED};font-size:0.78rem;margin-bottom:0.75rem;letter-spacing:0.03em;'>Pilih lampu yang tepat ↓</div>", unsafe_allow_html=True)
 
+        LAMPU_STYLES = {
+            "merah":  ("background:#D96868!important;color:#FBF6F6!important;box-shadow:0 5px 18px rgba(217,104,104,0.4)!important;",
+                       "background:#E07878!important;box-shadow:0 8px 26px rgba(217,104,104,0.65)!important;"),
+            "kuning": ("background:#C8954A!important;color:#2C2010!important;box-shadow:0 5px 18px rgba(200,149,74,0.4)!important;",
+                       "background:#D4A055!important;box-shadow:0 8px 26px rgba(200,149,74,0.65)!important;"),
+            "hijau":  ("background:#6A7E3F!important;color:#F0F4E8!important;box-shadow:0 5px 18px rgba(106,126,63,0.4)!important;",
+                       "background:#7A9048!important;box-shadow:0 8px 26px rgba(106,126,63,0.65)!important;"),
+        }
         for warna, info in WARNA.items():
-            st.markdown(f"<div class='btn-{warna}'>", unsafe_allow_html=True)
+            base, hover = LAMPU_STYLES[warna]
+            uid = f"lmpu-{warna}-{idx}"
+            st.markdown(f"""
+            <style>
+            #{uid} + div .stButton > button {{ {base} }}
+            #{uid} + div .stButton > button:hover {{ {hover} transform:translateY(-2px)!important; }}
+            </style>
+            <span id="{uid}"></span>
+            """, unsafe_allow_html=True)
             if st.button(f"{info['emoji']}  {info['label']}  —  {info['desc']}", key=f"w_{warna}_{idx}", use_container_width=True):
                 pilih_warna(warna)
                 st.rerun()
-            st.markdown("</div>", unsafe_allow_html=True)
 
         time.sleep(0.1)
         st.rerun()
