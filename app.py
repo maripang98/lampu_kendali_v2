@@ -12,151 +12,136 @@ SITUASI = [
 ]
 
 WARNA = {
-    "merah":  {"emoji": "🔴", "label": "MERAH",  "desc": "Berhenti & tarik napas",    "hex": "#FF4D4D", "glow": "rgba(255,77,77,0.45)"},
-    "kuning": {"emoji": "🟡", "label": "KUNING", "desc": "Hati-hati & evaluasi dulu", "hex": "#F5C400", "glow": "rgba(245,196,0,0.45)"},
-    "hijau":  {"emoji": "🟢", "label": "HIJAU",  "desc": "Bertindak dengan bijak",    "hex": "#22C55E", "glow": "rgba(34,197,94,0.45)"},
+    "merah":  {"emoji": "🔴", "label": "MERAH",  "desc": "Berhenti & tarik napas",    "hex": "#C0504A", "glow": "rgba(192,80,74,0.4)",   "txt": "#FBF6F6"},
+    "kuning": {"emoji": "🟡", "label": "KUNING", "desc": "Hati-hati & evaluasi dulu", "hex": "#D4A85A", "glow": "rgba(212,168,90,0.4)",  "txt": "#2C2010"},
+    "hijau":  {"emoji": "🟢", "label": "HIJAU",  "desc": "Bertindak dengan bijak",    "hex": "#6A7E3F", "glow": "rgba(106,126,63,0.4)",  "txt": "#F0F4E8"},
 }
 
 TIMER = 3
+BG      = "#FBF6F6"
+SURFACE = "#F2EBE4"
+CARD    = "#EDE4DB"
+BORDER  = "#D9CFC6"
+INK     = "#2C2218"
+MUTED   = "#9A8878"
+ACCENT  = "#D96868"
 
 st.set_page_config(page_title="Lampu Kendali", page_icon="🚦", layout="centered")
 
-st.markdown("""
+st.markdown(f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
-*, html, body { box-sizing: border-box; }
+*, html, body {{ box-sizing: border-box; }}
 
-html, body, [class*="css"], .stApp {
-    background-color: #08080F !important;
+html, body, [class*="css"], .stApp {{
+    background-color: {BG} !important;
     font-family: 'Plus Jakarta Sans', sans-serif !important;
-    color: #E2E2EE;
-}
+    color: {INK};
+}}
 
-#MainMenu, footer, header, [data-testid="stToolbar"] { visibility: hidden !important; }
+#MainMenu, footer, header, [data-testid="stToolbar"] {{ visibility: hidden !important; }}
 
-.block-container {
+.block-container {{
     padding: 1.5rem 1.25rem 5rem !important;
-    max-width: 430px !important;
+    max-width: 420px !important;
     margin: 0 auto;
-}
+}}
 
-.syne { font-family: 'Syne', sans-serif !important; }
+.syne {{ font-family: 'Syne', sans-serif !important; }}
 
-/* ── All streamlit buttons: base style ── */
-.stButton { width: 100% !important; }
-.stButton > button {
+/* ── Buttons ── */
+.stButton {{ width: 100% !important; }}
+.stButton > button {{
     width: 100% !important;
     border-radius: 14px !important;
     font-family: 'Syne', sans-serif !important;
     font-weight: 800 !important;
-    font-size: 0.92rem !important;
-    letter-spacing: 0.03em !important;
+    font-size: 0.88rem !important;
+    letter-spacing: 0.04em !important;
     padding: 0.8rem 1rem !important;
     border: none !important;
     cursor: pointer !important;
     transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease !important;
-}
-.stButton > button:hover {
+}}
+.stButton > button:hover {{
     transform: translateY(-2px) !important;
-    filter: brightness(1.1) !important;
-}
-.stButton > button:active {
+    filter: brightness(1.06) !important;
+}}
+.stButton > button:active {{
     transform: scale(0.97) !important;
-    filter: brightness(0.9) !important;
-}
+    filter: brightness(0.92) !important;
+}}
+.stButton > button[kind="primary"] {{
+    background: {ACCENT} !important;
+    color: #FBF6F6 !important;
+    box-shadow: 0 5px 18px rgba(217,104,104,0.35) !important;
+}}
 
-/* Primary (CTA) buttons */
-.stButton > button[kind="primary"] {
-    background: linear-gradient(135deg, #7C6FFF 0%, #B06EFF 100%) !important;
-    box-shadow: 0 6px 20px rgba(124,111,255,0.4) !important;
-    color: white !important;
-}
+/* Lampu buttons */
+.btn-merah .stButton > button  {{ background: #D96868 !important; color: #FBF6F6 !important; box-shadow: 0 5px 18px rgba(217,104,104,0.38) !important; }}
+.btn-kuning .stButton > button {{ background: #C8954A !important; color: #2C2010 !important; box-shadow: 0 5px 18px rgba(200,149,74,0.38) !important; }}
+.btn-hijau .stButton > button  {{ background: #6A7E3F !important; color: #F0F4E8 !important; box-shadow: 0 5px 18px rgba(106,126,63,0.38) !important; }}
+.btn-merah .stButton > button:hover  {{ box-shadow: 0 8px 26px rgba(217,104,104,0.55) !important; }}
+.btn-kuning .stButton > button:hover {{ box-shadow: 0 8px 26px rgba(200,149,74,0.55) !important; }}
+.btn-hijau .stButton > button:hover  {{ box-shadow: 0 8px 26px rgba(106,126,63,0.55) !important; }}
 
-/* Lampu buttons - using CSS class wrappers */
-.btn-merah .stButton > button {
-    background: #FF4D4D !important;
-    box-shadow: 0 6px 22px rgba(255,77,77,0.45) !important;
-    color: white !important;
-}
-.btn-kuning .stButton > button {
-    background: #F5C400 !important;
-    box-shadow: 0 6px 22px rgba(245,196,0,0.45) !important;
-    color: #1a1200 !important;
-}
-.btn-hijau .stButton > button {
-    background: #22C55E !important;
-    box-shadow: 0 6px 22px rgba(34,197,94,0.45) !important;
-    color: white !important;
-}
-.btn-merah .stButton > button:hover  { box-shadow: 0 10px 30px rgba(255,77,77,0.65) !important; }
-.btn-kuning .stButton > button:hover { box-shadow: 0 10px 30px rgba(245,196,0,0.65) !important; }
-.btn-hijau .stButton > button:hover  { box-shadow: 0 10px 30px rgba(34,197,94,0.65) !important; }
-
-/* ── Misc ── */
-.badge {
+/* ── UI Elements ── */
+.badge {{
     display: inline-block;
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: {CARD};
+    border: 1px solid {BORDER};
     border-radius: 999px;
     padding: 3px 12px;
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     font-weight: 700;
     letter-spacing: 0.08em;
-    color: #7777AA;
+    color: {MUTED};
     text-transform: uppercase;
-}
-.situasi-box {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.09);
+}}
+.situasi-box {{
+    background: {SURFACE};
+    border: 1px solid {BORDER};
     border-radius: 18px;
     padding: 1.1rem 1rem;
-    margin: 0.6rem 0 1rem;
-    font-size: 1rem;
-    font-weight: 500;
+    margin: 0.6rem 0 1.25rem;
+    font-size: 0.98rem;
+    font-weight: 600;
     line-height: 1.55;
-    color: #D8D8EE;
+    color: {INK};
     text-align: center;
-}
-.timer-bar-bg {
-    background: rgba(255,255,255,0.08);
-    border-radius: 999px;
-    height: 6px;
-    overflow: hidden;
-    margin: 0.4rem 0 1rem;
-}
-.result-card {
-    border-radius: 20px;
-    padding: 1.5rem 1rem;
-    text-align: center;
-    margin: 0.75rem 0 1rem;
-}
-.rekap-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 0.65rem 0.9rem;
-    border-radius: 14px;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.055);
-    margin-bottom: 7px;
-}
-.legend-row {
+}}
+.legend-row {{
     display: flex;
     align-items: center;
     gap: 12px;
     padding: 0.65rem 1rem;
     border-radius: 14px;
     margin-bottom: 8px;
-}
+}}
+.result-card {{
+    border-radius: 20px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    margin: 0.75rem 0 1rem;
+}}
+.rekap-row {{
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 0.65rem 0.9rem;
+    border-radius: 14px;
+    background: {SURFACE};
+    border: 1px solid {BORDER};
+    margin-bottom: 7px;
+}}
 </style>
 """, unsafe_allow_html=True)
 
 # ── session state ──
-for k, v in [("phase", "intro"), ("idx", 0), ("timer_start", 0.0), ("pilihan", {})]:
+for k, v in [("phase","intro"),("idx",0),("timer_start",0.0),("pilihan",{})]:
     if k not in st.session_state:
         st.session_state[k] = v
-
 
 def mulai_situasi():
     st.session_state.phase = "countdown"
@@ -173,30 +158,69 @@ def situasi_berikutnya():
     else:
         mulai_situasi()
 
+def circle_timer(sisa, total):
+    pct = sisa / total
+    r = 42
+    circ = 2 * 3.14159 * r
+    dash = circ * pct
+    gap  = circ - dash
+    # color shifts from olive-green → amber → rose as time runs out
+    if pct > 0.6:
+        stroke = "#6A7E3F"
+    elif pct > 0.3:
+        stroke = "#C8954A"
+    else:
+        stroke = "#D96868"
+    return f"""
+    <div style="display:flex;flex-direction:column;align-items:center;margin:0.5rem 0 1.1rem;">
+      <svg width="110" height="110" viewBox="0 0 110 110">
+        <circle cx="55" cy="55" r="{r}" fill="none" stroke="{BORDER}" stroke-width="7"/>
+        <circle cx="55" cy="55" r="{r}" fill="none"
+          stroke="{stroke}" stroke-width="7"
+          stroke-linecap="round"
+          stroke-dasharray="{dash:.2f} {gap:.2f}"
+          transform="rotate(-90 55 55)"
+          style="transition: stroke-dasharray 0.1s linear, stroke 0.3s ease;"/>
+        <text x="55" y="59" text-anchor="middle"
+          font-family="Syne, sans-serif" font-weight="800" font-size="22"
+          fill="{stroke}">{sisa:.1f}</text>
+        <text x="55" y="72" text-anchor="middle"
+          font-family="Plus Jakarta Sans, sans-serif" font-size="9"
+          fill="{MUTED}">detik</text>
+      </svg>
+    </div>
+    """
+
 
 # ══════════════════════════════════
 # INTRO
 # ══════════════════════════════════
 if st.session_state.phase == "intro":
-    st.markdown("""
-    <div style='text-align:center;padding:1.75rem 0 1.25rem;'>
-        <div style='font-size:3rem;margin-bottom:0.4rem;'>🚦</div>
-        <div class='syne' style='font-size:1.85rem;font-weight:800;
-            background:linear-gradient(130deg,#ffffff 35%,#A78BFA 100%);
-            -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-            margin-bottom:0.3rem;'>Lampu Kendali</div>
-        <div style='color:#55557A;font-size:0.82rem;'>Latihan pengendalian diri — 7 situasi</div>
+    st.markdown(f"""
+    <div style='text-align:center;padding:2rem 0 1.5rem;'>
+        <div style='font-size:2.8rem;margin-bottom:0.5rem;'>🚦</div>
+        <div class='syne' style='font-size:1.8rem;font-weight:800;color:{INK};margin-bottom:0.25rem;'>
+            Lampu Kendali
+        </div>
+        <div style='color:{MUTED};font-size:0.8rem;letter-spacing:0.04em;'>
+            LATIHAN PENGENDALIAN DIRI · 7 SITUASI
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
-    for w, info in WARNA.items():
+    configs = [
+        ("#D96868", "rgba(217,104,104,0.12)", "rgba(217,104,104,0.25)", "#FBF6F6", "merah"),
+        ("#C8954A", "rgba(200,149,74,0.12)",  "rgba(200,149,74,0.25)",  "#2C2010",  "kuning"),
+        ("#6A7E3F", "rgba(106,126,63,0.12)",  "rgba(106,126,63,0.25)",  "#F0F4E8",  "hijau"),
+    ]
+    for (color, bg, border_c, txt, key) in configs:
+        info = WARNA[key]
         st.markdown(f"""
-        <div class='legend-row' style='background:{info["hex"]}1A;border:1px solid {info["hex"]}33;'>
-            <span style='font-size:1.4rem;'>{info['emoji']}</span>
+        <div class='legend-row' style='background:{bg};border:1px solid {border_c};'>
+            <span style='font-size:1.3rem;'>{info['emoji']}</span>
             <div>
-                <div class='syne' style='font-size:0.85rem;font-weight:800;color:{info["hex"]};
-                    letter-spacing:0.06em;'>{info['label']}</div>
-                <div style='font-size:0.76rem;color:#7777AA;margin-top:1px;'>{info['desc']}</div>
+                <div class='syne' style='font-size:0.83rem;font-weight:800;color:{color};letter-spacing:0.06em;'>{info['label']}</div>
+                <div style='font-size:0.75rem;color:{MUTED};margin-top:1px;'>{info['desc']}</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -214,7 +238,6 @@ elif st.session_state.phase == "countdown":
     idx = st.session_state.idx
     elapsed = time.time() - st.session_state.timer_start
     sisa = max(0.0, TIMER - elapsed)
-    pct = sisa / TIMER
 
     st.markdown(f"""
     <div style='text-align:center;margin-bottom:0.5rem;'>
@@ -224,28 +247,12 @@ elif st.session_state.phase == "countdown":
     """, unsafe_allow_html=True)
 
     if sisa > 0.15:
-        color = "#FF4D4D" if pct < 0.4 else "#F5C400" if pct < 0.7 else "#22C55E"
-        st.markdown(f"""
-        <div style='text-align:center;margin-bottom:0.3rem;'>
-            <span class='syne' style='font-size:2.6rem;font-weight:800;color:{color};'>{sisa:.1f}</span>
-            <span style='color:#44446A;font-size:0.8rem;'> dtk</span>
-        </div>
-        <div class='timer-bar-bg'>
-            <div style='background:{color};width:{pct*100:.1f}%;height:100%;
-            border-radius:999px;box-shadow:0 0 8px {color};'></div>
-        </div>
-        <div style='text-align:center;color:#55557A;font-size:0.78rem;margin-bottom:0.6rem;'>
-            Pilih lampu yang tepat ↓
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(circle_timer(sisa, TIMER), unsafe_allow_html=True)
+        st.markdown(f"<div style='text-align:center;color:{MUTED};font-size:0.78rem;margin-bottom:0.75rem;letter-spacing:0.03em;'>Pilih lampu yang tepat ↓</div>", unsafe_allow_html=True)
 
         for warna, info in WARNA.items():
             st.markdown(f"<div class='btn-{warna}'>", unsafe_allow_html=True)
-            if st.button(
-                f"{info['emoji']}  {info['label']}  —  {info['desc']}",
-                key=f"w_{warna}_{idx}",
-                use_container_width=True
-            ):
+            if st.button(f"{info['emoji']}  {info['label']}  —  {info['desc']}", key=f"w_{warna}_{idx}", use_container_width=True):
                 pilih_warna(warna)
                 st.rerun()
             st.markdown("</div>", unsafe_allow_html=True)
@@ -270,28 +277,30 @@ elif st.session_state.phase == "hasil":
     <div style='text-align:center;margin-bottom:0.4rem;'>
         <span class='badge'>Situasi {idx+1} dari {len(SITUASI)}</span>
     </div>
-    <div style='color:#44446A;font-size:0.8rem;text-align:center;
-    font-style:italic;margin-bottom:0.75rem;'>"{SITUASI[idx]}"</div>
+    <div style='color:{MUTED};font-size:0.8rem;text-align:center;font-style:italic;margin-bottom:0.9rem;'>
+        "{SITUASI[idx]}"
+    </div>
     """, unsafe_allow_html=True)
 
     if pilihan and pilihan in WARNA:
         info = WARNA[pilihan]
-        txt = "#1a1200" if pilihan == "kuning" else "white"
+        btn_colors = {"merah": "#D96868", "kuning": "#C8954A", "hijau": "#6A7E3F"}
+        bg = btn_colors[pilihan]
         st.markdown(f"""
-        <div class='result-card' style='background:{info["hex"]};box-shadow:0 10px 36px {info["glow"]};'>
-            <div style='font-size:2.5rem;margin-bottom:6px;'>{info['emoji']}</div>
-            <div class='syne' style='font-size:1.35rem;font-weight:800;color:{txt};
-                letter-spacing:0.05em;'>{info['label']}</div>
-            <div style='color:{txt};opacity:0.82;font-size:0.8rem;margin-top:4px;'>{info['desc']}</div>
+        <div class='result-card' style='background:{bg};box-shadow:0 10px 32px {info["glow"]};'>
+            <div style='font-size:2.4rem;margin-bottom:6px;'>{info['emoji']}</div>
+            <div class='syne' style='font-size:1.3rem;font-weight:800;color:{info["txt"]};letter-spacing:0.05em;'>
+                {info['label']}
+            </div>
+            <div style='color:{info["txt"]};opacity:0.78;font-size:0.78rem;margin-top:5px;'>{info['desc']}</div>
         </div>
         """, unsafe_allow_html=True)
     else:
-        st.markdown("""
-        <div class='result-card' style='background:rgba(255,255,255,0.05);
-        border:1px solid rgba(255,255,255,0.09);'>
-            <div style='font-size:2.2rem;margin-bottom:6px;'>⏰</div>
-            <div class='syne' style='font-size:1.1rem;font-weight:800;color:#55557A;'>Waktu habis!</div>
-            <div style='color:#33334A;font-size:0.78rem;margin-top:3px;'>Tidak sempat memilih</div>
+        st.markdown(f"""
+        <div class='result-card' style='background:{SURFACE};border:1px solid {BORDER};'>
+            <div style='font-size:2rem;margin-bottom:6px;'>⏰</div>
+            <div class='syne' style='font-size:1.1rem;font-weight:800;color:{MUTED};'>Waktu habis!</div>
+            <div style='color:{BORDER};font-size:0.75rem;margin-top:3px;'>Tidak sempat memilih</div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -306,30 +315,33 @@ elif st.session_state.phase == "hasil":
 # ══════════════════════════════════
 elif st.session_state.phase == "selesai":
     st.balloons()
-    st.markdown("""
-    <div style='text-align:center;padding:1.25rem 0 0.75rem;'>
+    st.markdown(f"""
+    <div style='text-align:center;padding:1.5rem 0 0.75rem;'>
         <div style='font-size:2.2rem;'>🎉</div>
-        <div class='syne' style='font-size:1.5rem;font-weight:800;margin:0.3rem 0;'>Kamu keren!</div>
-        <div style='color:#55557A;font-size:0.8rem;'>Rekap pilihan kamu</div>
+        <div class='syne' style='font-size:1.5rem;font-weight:800;color:{INK};margin:0.3rem 0;'>Kamu keren!</div>
+        <div style='color:{MUTED};font-size:0.78rem;'>Rekap pilihan kamu</div>
     </div>
-    <div style='border-top:1px solid rgba(255,255,255,0.07);margin:0.75rem 0;'></div>
+    <div style='border-top:1px solid {BORDER};margin:0.75rem 0;'></div>
     """, unsafe_allow_html=True)
+
+    btn_colors = {"merah": "#D96868", "kuning": "#C8954A", "hijau": "#6A7E3F"}
 
     for i, situasi in enumerate(SITUASI):
         pilihan = st.session_state.pilihan.get(i)
         if pilihan and pilihan in WARNA:
             info = WARNA[pilihan]
-            dot = f"<span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:{info['hex']};box-shadow:0 0 5px {info['glow']};flex-shrink:0;margin-top:3px;'></span>"
-            warna_html = f"<span class='syne' style='color:{info['hex']};font-size:0.75rem;font-weight:800;letter-spacing:0.05em;'>{info['label']}</span>"
+            bg = btn_colors[pilihan]
+            dot = f"<span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:{bg};flex-shrink:0;margin-top:3px;'></span>"
+            warna_html = f"<span class='syne' style='color:{bg};font-size:0.73rem;font-weight:800;letter-spacing:0.05em;'>{info['label']}</span>"
         else:
-            dot = "<span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:#22223A;flex-shrink:0;margin-top:3px;'></span>"
-            warna_html = "<span style='color:#33334A;font-size:0.75rem;'>Tidak menjawab</span>"
+            dot = f"<span style='display:inline-block;width:9px;height:9px;border-radius:50%;background:{BORDER};flex-shrink:0;margin-top:3px;'></span>"
+            warna_html = f"<span style='color:{MUTED};font-size:0.73rem;'>Tidak menjawab</span>"
 
         st.markdown(f"""
         <div class='rekap-row'>
             {dot}
             <div style='flex:1;min-width:0;'>
-                <div style='font-size:0.78rem;color:#6666AA;line-height:1.4;margin-bottom:3px;'>{situasi}</div>
+                <div style='font-size:0.78rem;color:{MUTED};line-height:1.4;margin-bottom:3px;'>{situasi}</div>
                 {warna_html}
             </div>
         </div>
