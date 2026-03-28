@@ -32,7 +32,7 @@ WARNA_CFG = {
     },
 }
 
-TIMER = 7   # detik per situasi
+TIMER = 5   # detik per situasi
 
 # ══════════════════════════════════
 # PALETTE
