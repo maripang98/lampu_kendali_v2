@@ -5,13 +5,13 @@ import time
 # DATA
 # ══════════════════════════════════
 SITUASI = [
-    "Ada teman yang sengaja memancing kemarahanmu.",
-    "Temanmu disindir orang lain dan sedang sedih.",
-    "Ada gosip tentang dirimu menyebar.",
-    "Kamu dapat pesan DM yang bikin kamu tersinggung.",
-    "Ada teman yang butuh bantuan PR.",
-    "Kamu kecewa karena rencana batal.",
-    "Ada ajakan melakukan hal yang kamu tahu tidak benar.",
+    "Orang tua ngomel panjang lebar soal nilai atau sikap kamu — padahal kamu merasa udah usaha maksimal dan capek banget hari itu.",
+    "Kamu udah ngerjain tugas kelompok hampir sendirian, eh pas presentasi teman-teman yang males malah ikut dipuji guru.",
+    "Teman dekatmu tiba-tiba dingin dan jauh tanpa alasan yang jelas — kamu udah coba chat tapi cuma dibales seadanya.",
+    "Adik atau kakak kamu nyentuh barang kamu tanpa izin dan malah rusak, terus nyalahin kamu.",
+    "Kamu lagi nongkrong sama teman-teman, tiba-tiba mereka mulai ngomongin jelek salah satu teman yang nggak ada di situ — dan mereka minta kamu ikut nimbrung.",
+    "Kamu lagi gabut dan tanpa sadar udah scroll medsos berjam-jam — tiba-tiba sadar waktu habis, tugas belum dikerjain, dan kamu ngerasa hampa.",
+    "Teman-teman ngajak main atau nongkrong di hari Minggu pagi dan minta kamu skip ibadah, sambil bilang 'sekali aja nggak apa-apa'.",
 ]
 
 WARNA_CFG = {
